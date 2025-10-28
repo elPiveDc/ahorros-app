@@ -1,0 +1,90 @@
+:root {
+  --bg: #071024;
+  --card: #0b1220;
+  --text: #e6eef8;
+  --muted: #b8c4d6;
+  --accent: #8b5cf6;
+  --accent-2: #06b6d4;
+}
+
+:root[data-tema="light"] {
+  --bg: #f6f9fc;
+  --card: #ffffff;
+  --text: #042033;
+  --muted: #556070;
+  --accent: #3b82f6;
+  --accent-2: #06b6d4;
+}
+
+html,
+body {
+  height: 100%
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg), #021025);
+  color: var(--text);
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  padding-bottom: 84px;
+}
+
+.card-custom {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px;
+  width: calc(100% - 2rem);
+  max-width: 980px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(255, 255, 255, 0.02));
+  border-radius: 14px;
+  padding: .35rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1050;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.nav-icon {
+  font-size: 1.05rem;
+  color: var(--muted)
+}
+
+.nav-link.active .nav-icon {
+  color: var(--text)
+}
+
+.logo-app {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #001
+}
+
+.kv {
+  color: var(--muted);
+  font-size: .95rem
+}
+
+@media(min-width:992px) {
+  .bottom-nav {
+    display: none
+  }
+
+  .left-nav {
+    position: sticky;
+    top: 28px
+  }
+}
