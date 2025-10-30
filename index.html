@@ -2,131 +2,98 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Resumen - Ahorrá+</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Inicio - AhorraApp</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
-    <div data-insert-nav></div>
-
-    <div class="container app mt-4">
-      <div class="row">
-        <div class="col-12 col-lg-3 d-none d-lg-block">
-          <div class="card-custom left-nav p-3">
-            <div class="list-group">
-              <a
-                href="index.html"
-                class="list-group-item list-group-item-action list-group-item-dark"
-                >Inicio</a
-              >
-              <a
-                href="analisis.html"
-                class="list-group-item list-group-item-action list-group-item-dark"
-                >Análisis</a
-              >
-              <a
-                href="registro.html"
-                class="list-group-item list-group-item-action list-group-item-dark"
-                >Registrar</a
-              >
-              <a
-                href="perfil.html"
-                class="list-group-item list-group-item-action list-group-item-dark"
-                >Perfil</a
-              >
+  <body data-theme="dark">
+    <div class="content-with-sidebar">
+      <div class="container-main">
+        <div class="topbar">
+          <div class="d-flex align-items-center gap-3">
+            <button
+              class="btn btn-sm btn-outline-light btn-hamburger d-md-none"
+              onclick="document.getElementById('app-nav').classList.toggle('d-none')"
+            >
+              <i class="bi bi-list"></i>
+            </button>
+            <div>
+              <h4 class="mb-0">Hola, <span id="user-name">Usuario</span></h4>
+              <small class="small-muted">Bienvenido de nuevo</small>
             </div>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="coins-box p-1">
+              <div class="coins-amount">0</div>
+              <button
+                id="coin-plus"
+                class="btn btn-sm btn-outline-light btn-coin-plus"
+              >
+                <i class="bi bi-plus-lg"></i>
+              </button>
+            </div>
+            <button
+              class="btn btn-sm btn-outline-light"
+              onclick="document.documentElement.toggleAttribute('data-theme')"
+            >
+              Tema
+            </button>
           </div>
         </div>
-
-        <div class="col-12 col-lg-9">
-          <div class="card-custom p-3 mb-3">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <h5 class="mb-0">¡Hola, Mateo!</h5>
-                <div class="kv">Pequeños pasos, grandes ahorros</div>
-              </div>
-              <div class="text-end">
-                <div class="kv">Hoy • <strong>22 Oct, 2025</strong></div>
-                <div class="fw-bold">S/ 1,234.50</div>
+        <div class="row mt-3 g-3">
+          <div class="col-12 col-md-6">
+            <div class="card-custom p-3 fade-in">
+              <h5>Resumen semanal</h5>
+              <div style="height: 220px">
+                <canvas id="chart-week" style="max-height: 220px"></canvas>
               </div>
             </div>
           </div>
-
-          <div class="row g-3">
-            <div class="col-6 col-md-4">
-              <div class="card-custom p-3">
-                <div class="kv">Ahorro hoy</div>
-                <div class="h5 mt-2">S/ 45.00</div>
-                <div class="small kv">Meta diaria: S/50</div>
-              </div>
+          <div class="col-12 col-md-6">
+            <div class="card-custom p-3 fade-in">
+              <h5>Consejo aleatorio</h5>
+              <p id="tip" class="small-muted mb-0">—</p>
             </div>
-            <div class="col-6 col-md-4">
-              <div class="card-custom p-3">
-                <div class="kv">Gasto diario</div>
-                <div class="h5 mt-2">S/ 120.00</div>
-                <div class="small kv">Últimos gastos</div>
-              </div>
-            </div>
-            <div class="col-12 col-md-4">
-              <div class="card-custom p-3">
-                <div class="kv">Historial</div>
-                <canvas id="chart-daily" height="90"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-custom p-3 mt-3">
-            <h6>Resumen rápido</h6>
-            <div class="row">
-              <div class="col-4">
-                <div class="kv small">Diario</div>
-                <div class="fw-bold">S/120</div>
-              </div>
-              <div class="col-4">
-                <div class="kv small">Semanal</div>
-                <div class="fw-bold">S/890</div>
-              </div>
-              <div class="col-4">
-                <div class="kv small">Mensual</div>
-                <div class="fw-bold">S/4200</div>
+            <div class="card-custom p-3 mt-3 fade-in">
+              <h6>Acciones rápidas</h6>
+              <div class="d-flex gap-2 mt-2">
+                <a class="btn btn-outline-light" href="/registro.html"
+                  ><i class="bi bi-plus-circle me-2"></i>Registrar gasto</a
+                ><a class="btn btn-primary" href="/perfil.html"
+                  ><i class="bi bi-person-circle me-2"></i>Mi perfil</a
+                >
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- bottom nav mobile -->
-    <div class="bottom-nav d-lg-none">
-      <a href="index.html" class="nav-link text-center"
-        ><i class="bi bi-house nav-icon"></i>
-        <div class="small">Inicio</div></a
-      >
-      <a href="analisis.html" class="nav-link text-center"
-        ><i class="bi bi-graph-up nav-icon"></i>
-        <div class="small">Análisis</div></a
-      >
-      <a href="registro.html" class="nav-link text-center"
-        ><i class="bi bi-plus-circle nav-icon"></i>
-        <div class="small">Registrar</div></a
-      >
-      <a href="perfil.html" class="nav-link text-center"
-        ><i class="bi bi-person nav-icon"></i>
-        <div class="small">Perfil</div></a
-      >
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("user-name").textContent =
+          JSON.parse(localStorage.getItem("aa_user")).name || "Usuario";
+        const tips = [
+          "Ahorra aunque sea poco cada día.",
+          "Compara precios antes de comprar.",
+          "Establece metas cortas y cumple.",
+        ];
+        document.getElementById("tip").textContent =
+          tips[Math.floor(Math.random() * tips.length)];
+        updateCoinsUI();
+        document
+          .getElementById("coin-plus")
+          .addEventListener("click", () => showYouTubeAd());
+      });
+    </script>
   </body>
 </html>
