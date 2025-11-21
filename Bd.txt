@@ -1,0 +1,162 @@
+
+-- ============================================
+-- Base de datos: AhorraApp
+-- ============================================
+
+CREATE DATABASE IF NOT EXISTS ahorraapp_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE ahorraapp_db;
+
+-- ============================================
+-- Tabla: usuario
+-- ============================================
+CREATE TABLE usuario (
+    id_usuario BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(120) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    rol VARCHAR(30) DEFAULT 'USER',
+    monedas INT DEFAULT 0,
+    avatar_url VARCHAR(255),
+    tema_actual VARCHAR(100),
+    avatar_especial VARCHAR(100),
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ============================================
+-- Tabla: gasto
+-- ============================================
+CREATE TABLE gasto (
+    id_gasto BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    categoria VARCHAR(80) NOT NULL,
+    monto DECIMAL(10,2) NOT NULL,
+    descripcion TEXT,
+    tipo_registro ENUM('texto','voz','foto') DEFAULT 'texto',
+    archivo_url VARCHAR(255),
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- ============================================
+-- Tabla: meta
+-- ============================================
+CREATE TABLE meta (
+    id_meta BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    titulo VARCHAR(120) NOT NULL,
+    descripcion TEXT,
+    monto_objetivo DECIMAL(10,2) NOT NULL,
+    monto_actual DECIMAL(10,2) DEFAULT 0,
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    cumplida BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- ============================================
+-- Tabla: logro
+-- ============================================
+CREATE TABLE logro (
+    id_logro BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    nombre VARCHAR(120) NOT NULL,
+    descripcion TEXT,
+    puntos INT DEFAULT 0,
+    fecha_logro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- ============================================
+-- Tabla: publicacion
+-- ============================================
+CREATE TABLE publicacion (
+    id_publicacion BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    contenido TEXT NOT NULL,
+    imagen_url VARCHAR(255),
+    video_url VARCHAR(255),
+    fecha_publicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    likes INT DEFAULT 0,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- ============================================
+-- Tabla: app_vinculada
+-- ============================================
+CREATE TABLE app_vinculada (
+    id_app BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    nombre_app VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50),
+    token_conexion VARCHAR(255),
+    fecha_vinculacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- ============================================
+-- Tabla: transaccion_moneda
+-- ============================================
+CREATE TABLE transaccion_moneda (
+    id_transaccion BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    tipo ENUM('ganancia','gasto') NOT NULL,
+    motivo VARCHAR(150),
+    cantidad INT NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- ============================================
+-- Tabla nueva: item_tienda
+-- ============================================
+CREATE TABLE item_tienda (
+    id_item BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(120) NOT NULL,
+    descripcion TEXT,
+    costo INT NOT NULL,
+    tipo VARCHAR(50) NOT NULL, -- 'suscripcion', 'cosmetico', etc.
+    imagen_url VARCHAR(255)
+);
+
+-- ============================================
+-- Tabla nueva: compra_item
+-- ============================================
+CREATE TABLE compra_item (
+    id_compra BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    id_item BIGINT NOT NULL,
+    fecha_compra DATETIME DEFAULT CURRENT_TIMESTAMP,
+    costo_pagado INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_item) REFERENCES item_tienda(id_item)
+);
+
+-- ============================================
+-- Tabla nueva: cosmetico
+-- ============================================
+CREATE TABLE cosmetico (
+    id_cosmetico BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(120) NOT NULL,
+    tipo VARCHAR(50), -- avatar, tema, icono, extra
+    archivo_url VARCHAR(255)
+);
+
+-- ============================================
+-- Tabla nueva: usuario_cosmetico 
+-- ============================================
+CREATE TABLE usuario_cosmetico (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario BIGINT NOT NULL,
+    id_cosmetico BIGINT NOT NULL,
+    aplicado BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_cosmetico) REFERENCES cosmetico(id_cosmetico)
+);
+
+-- ============================================
+-- Índices
+-- ============================================
+CREATE INDEX idx_usuario_correo ON usuario (correo);
+CREATE INDEX idx_gasto_fecha ON gasto (fecha_registro);
+CREATE INDEX idx_publicacion_fecha ON publicacion (fecha_publicacion);
