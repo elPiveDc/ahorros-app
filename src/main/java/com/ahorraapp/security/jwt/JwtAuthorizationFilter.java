@@ -1,18 +1,23 @@
 package com.ahorraapp.security.jwt;
 
+import com.ahorraapp.security.service.CustomUserDetailsService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+
 import org.springframework.web.filter.OncePerRequestFilter;
-import com.ahorraapp.security.service.CustomUserDetailsService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 @Component
@@ -28,31 +33,39 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
-        String header = request.getHeader("Authorization");
-        if (header == null || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        String token = obtenerTokenDesdeCookie(request);
 
-        String token = header.substring(7);
+        if (token != null && jwtUtil.validarToken(token)) {
 
-        if (!jwtUtil.validarToken(token)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+            String correo = jwtUtil.obtenerSubjectDesdeToken(token);
 
-        String correo = jwtUtil.obtenerSubjectDesdeToken(token);
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(correo);
 
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(correo);
-        if (userDetails != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (userDetails != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null,
-                    userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
 
-            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(auth);
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String obtenerTokenDesdeCookie(HttpServletRequest request) {
+        if (request.getCookies() == null)
+            return null;
+
+        for (Cookie cookie : request.getCookies()) {
+            if ("AUTH_TOKEN".equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
 }

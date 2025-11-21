@@ -2,11 +2,11 @@ package com.ahorraapp.service;
 
 import java.util.List;
 
-import com.ahorraapp.dto.tienda.ItemTiendaDTO;
+import com.ahorraapp.dto.tienda.CompraItemDTO;
 
 public interface CompraItemService {
 
-    List<ItemTiendaDTO> listarMisCompras();
+    List<CompraItemDTO> listarMisCompras();
 
-    String comprarItem(Long idItem);
+    CompraItemDTO comprarItem(Long idItem);
 }

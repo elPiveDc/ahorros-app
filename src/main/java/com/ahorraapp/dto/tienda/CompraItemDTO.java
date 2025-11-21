@@ -2,7 +2,7 @@ package com.ahorraapp.dto.tienda;
 
 import lombok.*;
 
-import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -10,6 +10,10 @@ import jakarta.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 public class CompraItemDTO {
-    @NotNull
+
     private Long idCompra;
+    private Integer costoPagado;
+    private LocalDateTime fechaCompra;
+
+    private ItemTiendaDTO item;
 }

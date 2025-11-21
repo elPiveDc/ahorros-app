@@ -8,6 +8,9 @@ import com.ahorraapp.repository.UsuarioRepository;
 import com.ahorraapp.security.jwt.JwtUtil;
 import com.ahorraapp.service.AuthService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -84,4 +87,84 @@ public class AuthServiceImpl implements AuthService {
                                 .expiracion(System.currentTimeMillis() + jwtUtil.getExpirationMillis())
                                 .build();
         }
+
+        @Override
+        public void loginYGenerarCookie(AuthLoginRequestDTO dto, HttpServletResponse response) {
+
+                AuthResponseDTO loginResponse = login(dto);
+
+                Cookie cookie = new Cookie("AUTH_TOKEN", loginResponse.getToken());
+                cookie.setHttpOnly(true);
+                cookie.setSecure(false); // HTTPS recomendado (fasle por ahora http)
+                cookie.setPath("/");
+                cookie.setMaxAge(60 * 60);
+                cookie.setAttribute("SameSite", "Lax");
+
+                response.addCookie(cookie);
+        }
+
+        @Override
+        public void logoutYEliminarCookie(HttpServletResponse response) {
+
+                Cookie cookie = new Cookie("AUTH_TOKEN", null);
+                cookie.setMaxAge(0);
+                cookie.setHttpOnly(true);
+                cookie.setSecure(true);
+                cookie.setPath("/");
+                cookie.setAttribute("SameSite", "Strict");
+
+                response.addCookie(cookie);
+        }
+
+        @Override
+        public AuthResponseDTO obtenerUsuarioActual(HttpServletRequest request) {
+
+                // 1. Obtener las cookies
+                Cookie[] cookies = request.getCookies();
+                if (cookies == null) {
+                        return null;
+                }
+
+                String token = null;
+
+                // 2. Extraer AUTH_TOKEN
+                for (Cookie c : cookies) {
+                        if ("AUTH_TOKEN".equals(c.getName())) {
+                                token = c.getValue();
+                                break;
+                        }
+                }
+
+                if (token == null) {
+                        return null;
+                }
+
+                // 3. Validar token
+                if (!jwtUtil.validarToken(token)) {
+                        return null;
+                }
+
+                // 4. Extraer correo
+                // String correo = jwtUtil.obtenerUsername(token);
+
+                // 5. Obtener usuario en BD
+                Usuario usuario = usuarioRepository.findByCorreo("m@gamil.com")
+                                .orElse(null);
+
+                if (usuario == null) {
+                        return null;
+                }
+
+                // 6. Retornar DTO (sin token)
+                return AuthResponseDTO.builder()
+                                .idUsuario(usuario.getIdUsuario())
+                                .nombre(usuario.getNombre())
+                                .correo(usuario.getCorreo())
+                                .rol(usuario.getRol())
+                                .monedas(usuario.getMonedas())
+                                .avatarUrl(usuario.getAvatarUrl())
+                                .temaActual(usuario.getTemaActual())
+                                .build();
+        }
+
 }

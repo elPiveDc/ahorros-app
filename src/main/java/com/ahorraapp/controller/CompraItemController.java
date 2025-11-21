@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ahorraapp.dto.tienda.ItemTiendaDTO;
+import com.ahorraapp.dto.tienda.CompraItemDTO;
 import com.ahorraapp.service.CompraItemService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ public class CompraItemController {
     private final CompraItemService compraItemService;
 
     @GetMapping
-    public List<ItemTiendaDTO> misCompras() {
+    public List<CompraItemDTO> misCompras() {
         return compraItemService.listarMisCompras();
     }
 
     @PostMapping("/{idItem}")
-    public String comprar(@PathVariable Long idItem) {
+    public CompraItemDTO comprar(@PathVariable Long idItem) {
         return compraItemService.comprarItem(idItem);
     }
 }

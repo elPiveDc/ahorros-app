@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ahorraapp.dto.tienda.CompraItemDTO;
 import com.ahorraapp.dto.tienda.ItemTiendaDTO;
 import com.ahorraapp.model.CompraItem;
 import com.ahorraapp.model.ItemTienda;
@@ -31,17 +32,17 @@ public class CompraItemServiceImpl implements CompraItemService {
     private final TransaccionMonedaRepository transRepo;
 
     @Override
-    public List<ItemTiendaDTO> listarMisCompras() {
+    public List<CompraItemDTO> listarMisCompras() {
         Usuario usuario = obtenerUsuario();
 
         return compraRepo.findByUsuarioIdUsuario(usuario.getIdUsuario())
                 .stream()
-                .map(c -> mapToDto(c.getItem()))
+                .map(this::mapCompraToDto)
                 .toList();
     }
 
     @Override
-    public String comprarItem(Long idItem) {
+    public CompraItemDTO comprarItem(Long idItem) {
 
         Usuario usuario = obtenerUsuario();
         ItemTienda item = itemRepo.findById(idItem)
@@ -68,9 +69,10 @@ public class CompraItemServiceImpl implements CompraItemService {
                 .costoPagado(item.getCosto())
                 .fechaCompra(LocalDateTime.now())
                 .build();
+
         compraRepo.save(compra);
 
-        // 5) transacción
+        // 5) registrar transacción
         TransaccionMoneda t = TransaccionMoneda.builder()
                 .usuario(usuario)
                 .tipo("gasto")
@@ -78,9 +80,10 @@ public class CompraItemServiceImpl implements CompraItemService {
                 .cantidad(item.getCosto())
                 .fecha(LocalDateTime.now())
                 .build();
+
         transRepo.save(t);
 
-        return "Compra realizada con éxito";
+        return mapCompraToDto(compra);
     }
 
     private Usuario obtenerUsuario() {
@@ -88,7 +91,7 @@ public class CompraItemServiceImpl implements CompraItemService {
         return usuarioRepo.findByCorreo(correo).orElseThrow();
     }
 
-    private ItemTiendaDTO mapToDto(ItemTienda item) {
+    private ItemTiendaDTO mapItemToDto(ItemTienda item) {
         return ItemTiendaDTO.builder()
                 .idItem(item.getIdItem())
                 .nombre(item.getNombre())
@@ -96,6 +99,15 @@ public class CompraItemServiceImpl implements CompraItemService {
                 .costo(item.getCosto())
                 .tipo(item.getTipo())
                 .imagenUrl(item.getImagenUrl())
+                .build();
+    }
+
+    private CompraItemDTO mapCompraToDto(CompraItem compra) {
+        return CompraItemDTO.builder()
+                .idCompra(compra.getIdCompra())
+                .costoPagado(compra.getCostoPagado())
+                .fechaCompra(compra.getFechaCompra())
+                .item(mapItemToDto(compra.getItem()))
                 .build();
     }
 }
