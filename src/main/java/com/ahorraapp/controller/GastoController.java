@@ -25,7 +25,7 @@ public class GastoController {
         return ResponseEntity.ok(gastoService.crearGasto(dto));
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<GastoDTO>> listarGastosUsuario() {
         return ResponseEntity.ok(gastoService.listarGastosUsuario());
     }

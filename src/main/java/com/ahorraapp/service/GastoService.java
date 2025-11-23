@@ -1,9 +1,13 @@
 package com.ahorraapp.service;
 
 import com.ahorraapp.dto.gasto.*;
+import com.ahorraapp.model.Gasto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 
 public interface GastoService {
 

@@ -145,10 +145,10 @@ public class AuthServiceImpl implements AuthService {
                 }
 
                 // 4. Extraer correo
-                // String correo = jwtUtil.obtenerUsername(token);
+                String correo = jwtUtil.obtenerSubjectDesdeToken(token);
 
                 // 5. Obtener usuario en BD
-                Usuario usuario = usuarioRepository.findByCorreo("m@gamil.com")
+                Usuario usuario = usuarioRepository.findByCorreo(correo)
                                 .orElse(null);
 
                 if (usuario == null) {

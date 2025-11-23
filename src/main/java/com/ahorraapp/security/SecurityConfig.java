@@ -47,6 +47,8 @@ public class SecurityConfig {
                         .requestMatchers("/login.html", "/registro.html").permitAll()
                         .requestMatchers("/", "/index.html").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        // ruta para usuarios
+                        .requestMatchers("/api/gastos/**").authenticated()
                         // Todo lo demás requiere login
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

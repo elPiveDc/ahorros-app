@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Análisis de Gastos</title>
+
+    <!-- BOOTSTRAP -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- ICONOS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body class="bg-dark text-light">
+    <div class="container py-4">
+      <!-- TÍTULO -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📊 Análisis de Gastos</h2>
+      </div>
+
+      <!-- BOTONES DE FILTRO -->
+      <div class="btn-group mb-3" role="group">
+        <button id="btn-dia" class="btn btn-outline-light active">Hoy</button>
+        <button id="btn-semana" class="btn btn-outline-light">Semana</button>
+        <button id="btn-mes" class="btn btn-outline-light">Mes</button>
+      </div>
+
+      <!-- GRAFICOS -->
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card bg-secondary text-light shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Hoy</h5>
+              <canvas id="chart-day" height="150"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card bg-secondary text-light shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Semana</h5>
+              <canvas id="chart-week" height="150"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card bg-secondary text-light shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Mes</h5>
+              <canvas id="chart-month" height="150"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="card bg-secondary text-light shadow-sm mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Últimos gastos</h5>
+
+          <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle">
+              <thead class="table-light text-dark">
+                <tr>
+                  <th>Categoría</th>
+                  <th>Monto</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-gastos">
+                <tr>
+                  <td colspan="3">Cargando...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/service/gastos.js"></script>
+    <script src="/js/analisis_gastos.js"></script>
+  </body>
+</html>

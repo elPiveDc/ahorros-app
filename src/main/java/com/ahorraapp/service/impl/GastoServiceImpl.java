@@ -61,46 +61,31 @@ public class GastoServiceImpl implements GastoService {
     @Transactional(readOnly = true)
     public List<GastoDTO> listarGastosPorDia(LocalDate dia) {
         Usuario usuario = obtenerUsuarioAutenticado();
-        List<Gasto> gastos = gastoRepository.findByUsuarioIdUsuarioOrderByFechaRegistroDesc(usuario.getIdUsuario());
-        return gastos.stream()
-                .filter(g -> g.getFechaRegistro() != null && g.getFechaRegistro().toLocalDate().isEqual(dia))
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        return gastoRepository.findByDia(usuario.getIdUsuario(), dia)
+                .stream().map(this::mapToDto).toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<GastoDTO> listarGastosPorSemana(LocalDate fechaEnLaSemana) {
+    public List<GastoDTO> listarGastosPorSemana(LocalDate fecha) {
         Usuario usuario = obtenerUsuarioAutenticado();
-        LocalDate inicioSemana = fechaEnLaSemana.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate finSemana = inicioSemana.plusDays(6);
 
-        List<Gasto> gastos = gastoRepository.findByUsuarioIdUsuarioOrderByFechaRegistroDesc(usuario.getIdUsuario());
-        return gastos.stream()
-                .filter(g -> {
-                    if (g.getFechaRegistro() == null)
-                        return false;
-                    LocalDate fecha = g.getFechaRegistro().toLocalDate();
-                    return (!fecha.isBefore(inicioSemana)) && (!fecha.isAfter(finSemana));
-                })
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        LocalDate inicio = fecha.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate fin = inicio.plusDays(6);
+
+        LocalDateTime inicioDT = inicio.atStartOfDay();
+        LocalDateTime finDT = fin.atTime(LocalTime.MAX);
+
+        return gastoRepository.findByRango(usuario.getIdUsuario(), inicioDT, finDT)
+                .stream().map(this::mapToDto).toList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<GastoDTO> listarGastosPorMes(int mes, int anio) {
         Usuario usuario = obtenerUsuarioAutenticado();
-        List<Gasto> gastos = gastoRepository.findByUsuarioIdUsuarioOrderByFechaRegistroDesc(usuario.getIdUsuario());
-        return gastos.stream()
-                .filter(g -> {
-                    if (g.getFechaRegistro() == null)
-                        return false;
-                    LocalDate fecha = g.getFechaRegistro().toLocalDate();
-                    return fecha.getMonthValue() == mes && fecha.getYear() == anio;
-                })
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        return gastoRepository.findByMes(usuario.getIdUsuario(), mes, anio)
+                .stream().map(this::mapToDto).toList();
     }
 
     @Override

@@ -30,4 +30,10 @@ public class FrontendController {
     public String registrarGasto() {
         return "registro_gasto";
     }
+
+    @GetMapping("/gastos/analisis")
+    public String analisis() {
+        return "analisis_gastos";
+    }
+
 }
