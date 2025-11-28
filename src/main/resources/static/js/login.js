@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   async function safeParseJsonOrText(res) {
     try {
       const j = await res.json();
-      // si viene {message: "..."} o string
       if (j && typeof j === "object") {
         return j.message || (j.error ? j.error : JSON.stringify(j));
       }

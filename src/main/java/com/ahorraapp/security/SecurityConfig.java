@@ -33,9 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/auth/**") // login/logout
-                )
+                .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authorizeHttpRequests(auth -> auth
