@@ -2,6 +2,7 @@ package com.ahorraapp.service;
 
 import com.ahorraapp.dto.auth.AuthLoginRequestDTO;
 import com.ahorraapp.dto.auth.AuthResponseDTO;
+import com.ahorraapp.dto.auth.UsuarioEditarDTO;
 import com.ahorraapp.dto.auth.UsuarioRegistroDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,4 +19,7 @@ public interface AuthService {
     void loginYGenerarCookie(AuthLoginRequestDTO dto, HttpServletResponse response);
 
     void logoutYEliminarCookie(HttpServletResponse response);
+
+    AuthResponseDTO editarPerfil(UsuarioEditarDTO dto, HttpServletRequest request);
+
 }

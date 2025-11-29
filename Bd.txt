@@ -16,7 +16,7 @@ CREATE TABLE usuario (
     contrasena VARCHAR(255) NOT NULL,
     rol VARCHAR(30) DEFAULT 'USER',
     monedas INT DEFAULT 0,
-    avatar_url VARCHAR(255),
+    avatar_url VARCHAR(20000),
     tema_actual VARCHAR(100),
     avatar_especial VARCHAR(100),
     fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP

@@ -2,6 +2,7 @@ package com.ahorraapp.service.impl;
 
 import com.ahorraapp.dto.auth.AuthLoginRequestDTO;
 import com.ahorraapp.dto.auth.AuthResponseDTO;
+import com.ahorraapp.dto.auth.UsuarioEditarDTO;
 import com.ahorraapp.dto.auth.UsuarioRegistroDTO;
 import com.ahorraapp.model.Usuario;
 import com.ahorraapp.repository.UsuarioRepository;
@@ -164,6 +165,45 @@ public class AuthServiceImpl implements AuthService {
                                 .monedas(usuario.getMonedas())
                                 .avatarUrl(usuario.getAvatarUrl())
                                 .temaActual(usuario.getTemaActual())
+                                .build();
+        }
+
+        @Override
+        public AuthResponseDTO editarPerfil(UsuarioEditarDTO dto, HttpServletRequest request) {
+
+                // Obtener usuario autenticado por el token de la cookie
+                AuthResponseDTO usuarioActual = obtenerUsuarioActual(request);
+
+                if (usuarioActual == null) {
+                        throw new RuntimeException("No autenticado");
+                }
+
+                // Buscar en BD
+                Usuario usuario = usuarioRepository.findById(usuarioActual.getIdUsuario())
+                                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+                // Actualizar campos
+                if (dto.getNombre() != null)
+                        usuario.setNombre(dto.getNombre());
+
+                if (dto.getAvatarUrl() != null)
+                        usuario.setAvatarUrl(dto.getAvatarUrl());
+
+                if (dto.getTemaActual() != null)
+                        usuario.setTemaActual(dto.getTemaActual());
+
+                usuarioRepository.save(usuario);
+
+                // Construir nueva respuesta
+                return AuthResponseDTO.builder()
+                                .idUsuario(usuario.getIdUsuario())
+                                .nombre(usuario.getNombre())
+                                .correo(usuario.getCorreo())
+                                .rol(usuario.getRol())
+                                .monedas(usuario.getMonedas())
+                                .avatarUrl(usuario.getAvatarUrl())
+                                .temaActual(usuario.getTemaActual())
+                                .expiracion(System.currentTimeMillis() + 3600_000)
                                 .build();
         }
 

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - AhorraApp</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .perfil-avatar-lg {
+        width: 140px;
+        height: 140px;
+        border: 4px solid #ddd;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+
+  <body class="bg-light">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-dark p-2">
+      <div class="container-fluid">
+        <span class="navbar-brand">AhorraApp</span>
+        <button class="btn btn-outline-light btn-sm" id="btn-logout">
+          <i class="bi bi-box-arrow-right"></i> Salir
+        </button>
+      </div>
+    </nav>
+
+    <!-- CONTENIDO -->
+    <div class="container mt-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="text-center">
+            <img
+              id="perfil-avatar"
+              src="/img/perfilgenerico.jpeg"
+              class="rounded-circle perfil-avatar-lg mb-3"
+              alt="Avatar"
+            />
+
+            <h3 id="perfil-nombre">Cargando...</h3>
+            <p class="text-muted" id="perfil-correo"></p>
+          </div>
+
+          <hr />
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h5><i class="bi bi-person-badge"></i> Rol</h5>
+              <p id="perfil-rol"></p>
+            </div>
+
+            <div class="col-md-6">
+              <h5><i class="bi bi-coin"></i> Monedas</h5>
+              <p id="perfil-monedas"></p>
+            </div>
+
+            <div class="col-md-6">
+              <h5><i class="bi bi-palette"></i> Tema actual</h5>
+              <p id="perfil-tema"></p>
+            </div>
+
+            <div class="col-md-6">
+              <h5><i class="bi bi-clock"></i> Expiración del token</h5>
+              <p id="perfil-expiracion"></p>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-primary" id="btn-editar">
+              <i class="bi bi-pencil"></i> Editar perfil
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL EDITAR PERFIL -->
+    <div class="modal fade" id="modalEditarPerfil" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar perfil</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="form-editar-perfil">
+              <div class="text-center mb-3">
+                <img
+                  id="edit-avatar-preview"
+                  src="/img/perfilgenerico.jpeg"
+                  class="rounded-circle perfil-avatar-lg"
+                  alt="Avatar"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">URL del avatar</label>
+                <input
+                  type="text"
+                  id="edit-avatar-url"
+                  class="form-control"
+                  placeholder="https://example.com/avatar.png"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Subir avatar</label>
+                <input
+                  type="file"
+                  id="edit-avatar-file"
+                  class="form-control"
+                  accept="image/*"
+                />
+                <div class="form-text">
+                  Puedes usar una URL o subir archivo.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  id="edit-nombre"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Tema</label>
+                <select id="edit-tema" class="form-select">
+                  <option value="claro">Claro</option>
+                  <option value="oscuro">Oscuro</option>
+                  <option value="verde">Verde</option>
+                  <option value="morado">Morado</option>
+                  <option value="sistema">Sistema</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-save"></i> Guardar cambios
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/service/auth.js"></script>
+    <script src="/js/perfil.js"></script>
+  </body>
+</html>

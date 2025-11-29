@@ -2,6 +2,7 @@ package com.ahorraapp.controller;
 
 import com.ahorraapp.dto.auth.AuthLoginRequestDTO;
 import com.ahorraapp.dto.auth.AuthResponseDTO;
+import com.ahorraapp.dto.auth.UsuarioEditarDTO;
 import com.ahorraapp.dto.auth.UsuarioRegistroDTO;
 import com.ahorraapp.service.AuthService;
 
@@ -50,6 +51,15 @@ public class AuthController {
             return ResponseEntity.status(401).body("No autenticado");
         }
         return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping("/editar")
+    public ResponseEntity<AuthResponseDTO> editarPerfil(
+            @Valid @RequestBody UsuarioEditarDTO dto,
+            HttpServletRequest request) {
+
+        AuthResponseDTO actualizado = authService.editarPerfil(dto, request);
+        return ResponseEntity.ok(actualizado);
     }
 
 }

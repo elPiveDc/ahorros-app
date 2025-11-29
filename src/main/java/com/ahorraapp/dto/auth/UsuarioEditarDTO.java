@@ -7,15 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthResponseDTO {
+public class UsuarioEditarDTO {
 
-    private String token;
-    private Long idUsuario;
     private String nombre;
-    private String correo;
-    private String rol;
-    private Integer monedas;
+
     private String avatarUrl;
+
     private String temaActual;
-    private long expiracion;
 }

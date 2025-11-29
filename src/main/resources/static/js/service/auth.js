@@ -1,4 +1,4 @@
-// /js/auth.js
+// /js/service/auth.js
 // Helpers para autenticación con backend basado en cookie HttpOnly.
 
 const API = {
@@ -6,6 +6,7 @@ const API = {
   register: "/auth/registro",
   logout: "/auth/logout",
   me: "/auth/me",
+  editar: "/auth/editar",
 };
 
 /**
@@ -74,4 +75,20 @@ async function redirectIfAuthenticated() {
   } catch (e) {
     // ignore
   }
+}
+
+/** Edita el perfil del usuario autenticado */
+async function apiEditarPerfil({ nombre, avatarUrl, temaActual }) {
+  const res = await fetch(API.editar, {
+    method: "PUT",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre, avatarUrl, temaActual }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al editar perfil: " + res.status);
+  }
+
+  return res.json();
 }

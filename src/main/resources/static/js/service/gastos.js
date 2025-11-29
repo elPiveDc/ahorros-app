@@ -12,12 +12,12 @@ const API_GASTOS = {
 };
 
 /** Crear gasto */
-async function apiCrearGasto({ monto, categoria, fecha }) {
+async function apiCrearGasto(gasto) {
   const res = await fetch(API_GASTOS.crear, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ monto, categoria, fecha }),
+    body: JSON.stringify(gasto),
   });
   return res;
 }
