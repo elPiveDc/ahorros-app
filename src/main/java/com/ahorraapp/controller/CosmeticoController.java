@@ -14,7 +14,7 @@ import com.ahorraapp.service.CosmeticoService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/cosmeticos")
+@RequestMapping("/api/cosmeticos")
 @RequiredArgsConstructor
 public class CosmeticoController {
 

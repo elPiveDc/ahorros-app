@@ -10,7 +10,7 @@ import com.ahorraapp.service.MonedaService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/monedas")
+@RequestMapping("/api/monedas")
 @RequiredArgsConstructor
 public class MonedaController {
 

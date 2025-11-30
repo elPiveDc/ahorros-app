@@ -2,11 +2,13 @@ package com.ahorraapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/ahorrapp")
 @Controller
 public class FrontendController {
 
-    @GetMapping("/")
+    @GetMapping
     public String home() {
         return "index";
     }
@@ -34,6 +36,11 @@ public class FrontendController {
     @GetMapping("/gastos/analisis")
     public String analisis() {
         return "analisis_gastos";
+    }
+
+    @GetMapping("/tienda")
+    public String tienda() {
+        return "tienda";
     }
 
 }

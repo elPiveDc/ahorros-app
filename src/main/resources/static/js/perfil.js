@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     userData = await apiMe();
 
     if (!userData) {
-      window.location.href = "/login";
+      window.location.href = "/ahorrapp/login";
       return;
     }
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     expiracionEl.textContent = fecha.toLocaleString();
   } catch (err) {
     console.error("Error al cargar perfil:", err);
-    window.location.href = "/login";
+    window.location.href = "/ahorrapp/login";
   }
 
   // -----------------------------
@@ -123,6 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   btnLogout.addEventListener("click", async () => {
     await apiLogout();
-    window.location.href = "/login";
+    window.location.href = "/ahorrapp/login";
   });
 });

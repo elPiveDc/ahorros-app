@@ -38,15 +38,12 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints públicos
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/public/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/tienda/**").permitAll()
-                        .requestMatchers("/login", "/registro").permitAll()
-                        .requestMatchers("/login.html", "/registro.html").permitAll()
-                        .requestMatchers("/", "/index.html").permitAll()
+                        .requestMatchers("/ahorrapp/**").permitAll()
+                        .requestMatchers("/auth/publico/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        // ruta para usuarios
-                        .requestMatchers("/api/gastos/**").permitAll()
+                        // Ruta para usuarios
+                        .requestMatchers("/auth/usuario/**").hasRole("USER")
+                        .requestMatchers("/api/**").authenticated()
                         // Todo lo demás requiere login
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

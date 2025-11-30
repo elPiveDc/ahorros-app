@@ -171,18 +171,16 @@ public class AuthServiceImpl implements AuthService {
         @Override
         public AuthResponseDTO editarPerfil(UsuarioEditarDTO dto, HttpServletRequest request) {
 
-                // Obtener usuario autenticado por el token de la cookie
                 AuthResponseDTO usuarioActual = obtenerUsuarioActual(request);
 
                 if (usuarioActual == null) {
+
                         throw new RuntimeException("No autenticado");
                 }
 
-                // Buscar en BD
                 Usuario usuario = usuarioRepository.findById(usuarioActual.getIdUsuario())
                                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-                // Actualizar campos
                 if (dto.getNombre() != null)
                         usuario.setNombre(dto.getNombre());
 

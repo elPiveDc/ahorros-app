@@ -160,3 +160,70 @@ CREATE TABLE usuario_cosmetico (
 CREATE INDEX idx_usuario_correo ON usuario (correo);
 CREATE INDEX idx_gasto_fecha ON gasto (fecha_registro);
 CREATE INDEX idx_publicacion_fecha ON publicacion (fecha_publicacion);
+
+
+
+----------
+INSERT INTO item_tienda (nombre, descripcion, costo, tipo, imagen_url) VALUES
+(
+  'Netflix 1 Mes',
+  'Suscripción Netflix válida por 1 mes. Acceso completo a la plataforma.',
+  30,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'
+),
+(
+  'Netflix 3 Meses',
+  'Suscripción Netflix válida por 3 meses. Ahorra pagando en paquete.',
+  85,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'
+),
+(
+  'Netflix 6 Meses',
+  'Suscripción Netflix válida por 6 meses. Plan ideal para usuarios frecuentes.',
+  160,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'
+);
+
+INSERT INTO item_tienda (nombre, descripcion, costo, tipo, imagen_url) VALUES
+(
+  'Spotify Premium 1 Mes',
+  'Acceso sin anuncios a Spotify Premium por 1 mes.',
+  20,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg'
+),
+(
+  'Spotify Premium 3 Meses',
+  'Disfruta Spotify Premium por 3 meses a precio promocional.',
+  55,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg'
+),
+(
+  'Spotify Premium 12 Meses',
+  'Suscripción anual a Spotify Premium con descuento exclusivo.',
+  200,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg'
+);
+
+
+INSERT INTO item_tienda (nombre, descripcion, costo, tipo, imagen_url) VALUES
+(
+  'Disney+ 1 Mes',
+  'Acceso a Disney+, Pixar, Marvel, Star Wars y National Geographic.',
+  25,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg'
+),
+(
+  'Disney+ 6 Meses',
+  'Suscripción Disney+ por 6 meses con precio preferencial.',
+  135,
+  'suscripcion',
+  'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg'
+);
+

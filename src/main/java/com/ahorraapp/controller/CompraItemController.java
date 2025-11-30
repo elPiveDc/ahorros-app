@@ -14,7 +14,7 @@ import com.ahorraapp.service.CompraItemService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/tienda/compras")
+@RequestMapping("/api/tienda/compras")
 @RequiredArgsConstructor
 public class CompraItemController {
 

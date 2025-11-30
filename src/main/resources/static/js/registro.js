@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (res.ok) {
         // Registro exitoso: redirige a login
-        window.location.href = "/login";
+        window.location.href = "/ahorrapp/login";
         return;
       }
 

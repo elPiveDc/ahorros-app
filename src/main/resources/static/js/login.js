@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (res.status === 200 || res.status === 204) {
         // El backend debe haber agregado cookie HttpOnly; redirigimos a '/'
-        window.location.href = "/";
+        window.location.href = "/ahorrapp";
         return;
       }
 

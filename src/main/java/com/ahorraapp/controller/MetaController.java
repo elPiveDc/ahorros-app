@@ -50,7 +50,6 @@ public class MetaController {
         return ResponseEntity.noContent().build();
     }
 
-    // endpoint faltante para gamificación
     @PutMapping("/{idMeta}/cumplir")
     public ResponseEntity<MetaDTO> marcarComoCumplida(@PathVariable Long idMeta) {
         return ResponseEntity.ok(metaService.marcarComoCumplida(idMeta));

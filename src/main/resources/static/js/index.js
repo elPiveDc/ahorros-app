@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const user = await apiMe();
 
   if (!user) {
-    window.location.href = "/login";
+    window.location.href = "/ahorrapp/login";
     return;
   }
 
@@ -24,6 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Acción al cerrar sesión
   document.getElementById("btn-logout").addEventListener("click", async () => {
     await apiLogout();
-    window.location.href = "/login";
+    window.location.href = "/ahorrapp/login";
   });
 });

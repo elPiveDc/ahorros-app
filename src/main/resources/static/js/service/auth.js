@@ -2,11 +2,11 @@
 // Helpers para autenticación con backend basado en cookie HttpOnly.
 
 const API = {
-  login: "/auth/login",
-  register: "/auth/registro",
-  logout: "/auth/logout",
-  me: "/auth/me",
-  editar: "/auth/editar",
+  login: "/auth/publico/login",
+  register: "/auth/publico/registro",
+  logout: "/auth/usuario/logout",
+  me: "/auth/usuario/me",
+  editar: "/auth/usuario/editar",
 };
 
 /**
@@ -70,7 +70,7 @@ async function redirectIfAuthenticated() {
   try {
     const user = await apiMe();
     if (user) {
-      window.location.href = "/";
+      window.location.href = "/ahorrapp";
     }
   } catch (e) {
     // ignore

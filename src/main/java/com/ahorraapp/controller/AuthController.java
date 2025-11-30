@@ -21,13 +21,13 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/registro")
+    @PostMapping("/publico/registro")
     public ResponseEntity<AuthResponseDTO> registrar(
             @Valid @RequestBody UsuarioRegistroDTO dto) {
         return ResponseEntity.ok(authService.registrar(dto));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/publico/login")
     public ResponseEntity<String> login(
             @Valid @RequestBody AuthLoginRequestDTO dto,
             HttpServletResponse response) {
@@ -36,14 +36,14 @@ public class AuthController {
         return ResponseEntity.ok("Login exitoso");
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/usuario/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
 
         authService.logoutYEliminarCookie(response);
         return ResponseEntity.ok("Logout correcto");
     }
 
-    @GetMapping("/me")
+    @GetMapping("/usuario/me")
     public ResponseEntity<?> me(HttpServletRequest request) {
 
         AuthResponseDTO dto = authService.obtenerUsuarioActual(request);
@@ -53,7 +53,7 @@ public class AuthController {
         return ResponseEntity.ok(dto);
     }
 
-    @PutMapping("/editar")
+    @PutMapping("/usuario/editar")
     public ResponseEntity<AuthResponseDTO> editarPerfil(
             @Valid @RequestBody UsuarioEditarDTO dto,
             HttpServletRequest request) {
