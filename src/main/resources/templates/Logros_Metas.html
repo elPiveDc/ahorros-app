@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Metas y Logros</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-dark text-light">
+    <div class="container py-4">
+      <h2 class="fw-bold mb-4 text-center">🎯 Metas & 🏆 Logros</h2>
+
+      <div class="row g-4">
+        <!-- METAS -->
+        <div class="col-md-7">
+          <div class="card bg-secondary text-light shadow-sm">
+            <div class="card-body">
+              <h4 class="card-title">Metas</h4>
+
+              <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                  <thead class="table-light text-dark">
+                    <tr>
+                      <th>Título</th>
+                      <th>Descripción</th>
+                      <th>Progreso</th>
+                      <th>Inicio</th>
+                      <th>Fin</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-metas">
+                    <tr>
+                      <td colspan="6">Cargando...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGROS -->
+        <div class="col-md-5">
+          <div class="card bg-secondary text-light shadow-sm">
+            <div class="card-body">
+              <h4 class="card-title">Logros</h4>
+
+              <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                  <thead class="table-light text-dark">
+                    <tr>
+                      <th>Título</th>
+                      <th>Descripción</th>
+                      <th>Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-logros">
+                    <tr>
+                      <td colspan="3">Cargando...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/service/metas.js"></script>
+    <script src="/js/service/logros.js"></script>
+    <script src="/js/logros_metas.js"></script>
+  </body>
+</html>

@@ -43,4 +43,9 @@ public class FrontendController {
         return "tienda";
     }
 
+    @GetMapping("/logros_metas")
+    public String logrosymetas() {
+        return "Logros_Metas";
+    }
+
 }

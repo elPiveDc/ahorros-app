@@ -24,6 +24,6 @@ public class MetaCrearDTO {
     @NotNull(message = "Debe especificar una fecha de inicio.")
     private LocalDate fechaInicio; // luego lo conviertes a LocalDate
 
-    @NotBlank
+    @NotNull
     private LocalDate fechaFin;
 }
