@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AhorraApp - Inicio</title>
 
+    <!-- Bootstrap CSS y Icons -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,50 +14,259 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
     />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Micro CSS interno (solo variables y pequeños fixes para contraste/animaciones) -->
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
 
-  <body>
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-dark bg-dark p-2">
+  <body id="app-body" data-bs-theme="light" class="bg-body">
+    <!-- NAV -->
+    <nav id="main-nav" class="navbar navbar-expand-lg px-3">
       <div class="container-fluid">
-        <span class="navbar-brand">AhorraApp</span>
-        <div>
-          <span id="nav-user-name" class="text-light me-3"></span>
-          <button class="btn btn-outline-light btn-sm" id="btn-logout">
-            <i class="bi bi-box-arrow-right"></i> Salir
-          </button>
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center gap-2"
+          href="/ahorrapp"
+          aria-label="AhorraApp home"
+        >
+          <span
+            class="d-inline-flex align-items-center justify-content-center rounded-circle"
+            style="
+              width: 36px;
+              height: 36px;
+              background: linear-gradient(135deg, #eef2ff, #f3f4f6);
+            "
+          >
+            <i
+              class="bi bi-wallet2"
+              style="font-size: 1.05rem; color: var(--app-accent-1)"
+            ></i>
+          </span>
+          <span>AhorraApp</span>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+          aria-controls="mainNavbar"
+          aria-expanded="false"
+          aria-label="Abrir menú"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="/ahorrapp/perfil">Perfil</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="gastosDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Gastos</a
+              >
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="gastosDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="/ahorrapp/gastos/registrar"
+                    >Registrar Gasto</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/ahorrapp/gastos/analisis"
+                    >Análisis</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/ahorrapp/tienda">Tienda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ahorrapp/logros_metas"
+                >Logros y Metas</a
+              >
+            </li>
+
+            <!-- Theme toggle y logout -->
+            <li class="nav-item d-flex align-items-center ms-3">
+              <button
+                id="theme-toggle"
+                class="btn btn-sm btn-outline-secondary me-2"
+                title="Cambiar tema"
+                aria-pressed="false"
+                aria-label="Cambiar tema"
+              >
+                <i id="theme-icon" class="bi bi-moon-stars-fill"></i>
+              </button>
+
+              <button
+                id="btn-logout"
+                class="btn btn-sm btn-outline-danger"
+                title="Salir"
+              >
+                <i class="bi bi-box-arrow-right"></i>
+                <span class="d-none d-sm-inline">Salir</span>
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
 
-    <!-- CONTENIDO -->
-    <div class="container mt-4">
-      <h2>Bienvenido, <span id="user-name"></span></h2>
-      <p>Cargando tus datos...</p>
-      <div id="user-info" class="mt-3"></div>
-    </div>
-
-    <!-- RESUMEN MENSUAL DE GASTOS -->
-    <div class="container mt-4">
-      <div class="card bg-secondary text-light shadow-sm mb-4">
-        <div class="card-body">
-          <h4 class="fw-bold mb-3">📅 Resumen mensual de tus gastos</h4>
-
-          <!-- RESUMEN MENSUAL (GRÁFICO) -->
-          <div class="container mt-4"></div>
-
-          <!-- Enlace al análisis -->
-          <a
-            class="btn btn-outline-light mt-2"
-            href="/ahorrapp/gastos/analisis"
+    <!-- MAIN -->
+    <main class="container my-4">
+      <!-- HERO -->
+      <div id="hero" class="row g-3 align-items-center">
+        <div class="col-lg-8">
+          <div
+            id="hero-card"
+            class="p-4 rounded-4 shadow-sm bg-body-tertiary fade-in-up"
+            role="region"
+            aria-labelledby="welcome-title"
           >
-            Ver análisis completo
-          </a>
+            <h2 id="welcome-title" class="mb-1">
+              Bienvenido, <span id="user-name"></span>
+            </h2>
+            <p id="welcome-sub" class="mb-0 text-muted">
+              Mira lo más importante del mes.
+            </p>
+            <p id="welcome-sub" class="mb-0 text-muted">
+              No te olvide de ahorrar 😉
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div
+            id="user-info"
+            class="p-3 rounded-4 shadow-sm bg-body-tertiary fade-in-up"
+          ></div>
         </div>
       </div>
-    </div>
 
+      <!-- RESUMEN MENSUAL -->
+      <section class="mt-4" id="resumen-mes">
+        <div class="card rounded-4 shadow-lg overflow-hidden">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h4 class="fw-bold mb-0">📅 Resumen mensual</h4>
+                <small class="text-muted"
+                  >Gastos por categoría — mes actual</small
+                >
+              </div>
+
+              <div class="d-flex align-items-center gap-2">
+                <div class="btn-group" role="group" aria-label="Periodo">
+                  <button
+                    id="btn-mes"
+                    type="button"
+                    class="btn btn-sm btn-primary active"
+                  >
+                    Mes
+                  </button>
+                </div>
+
+                <a
+                  class="btn btn-outline-primary btn-sm"
+                  href="/ahorrapp/gastos/analisis"
+                  >Ver análisis completo</a
+                >
+              </div>
+            </div>
+
+            <div class="row mt-4 gy-3 align-items-stretch">
+              <div class="col-lg-7">
+                <div class="card border-0 h-100 rounded-3">
+                  <div class="card-body d-flex flex-column">
+                    <div class="chart-container flex-grow-1 position-relative">
+                      <canvas
+                        id="chart-month"
+                        aria-label="Gráfico de gastos del mes"
+                      ></canvas>
+                    </div>
+
+                    <div
+                      class="mt-2 d-flex justify-content-between align-items-center"
+                    >
+                      <small class="text-muted"
+                        >Las barras muestran totales por categoría</small
+                      >
+                      <small id="total-mes" class="fw-semibold"></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-5">
+                <div class="card border-0 h-100 rounded-3">
+                  <div class="card-body">
+                    <h6 class="fw-semibold">Top gastos</h6>
+
+                    <div class="table-responsive mt-2">
+                      <table
+                        class="table table-borderless table-sm align-middle"
+                      >
+                        <thead>
+                          <tr class="text-muted small">
+                            <th>Categoria</th>
+                            <th>Monto</th>
+                            <th>Fecha</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tabla-gastos">
+                          <tr>
+                            <td colspan="3" class="text-center text-muted">
+                              Cargando...
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div
+                      class="mt-3 d-flex justify-content-between align-items-center"
+                    >
+                      <small class="text-muted">Hasta 10 registros</small>
+                      <a
+                        class="btn btn-success btn-sm"
+                        href="/ahorrapp/gastos/registrar"
+                        >Registrar gasto</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- row -->
+          </div>
+          <!-- card-body -->
+        </div>
+        <!-- card -->
+      </section>
+    </main>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Tus servicios (manteniendo estructura) -->
     <script src="/js/service/auth.js"></script>
+    <script src="/js/service/gastos.js"></script>
+
+    <!-- Lógica del index (separado) -->
     <script src="/js/index.js"></script>
   </body>
 </html>

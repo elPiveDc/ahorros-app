@@ -1,0 +1,99 @@
+/* Paleta y ajustes para modo claro (gris elegante) y animaciones ligeras */
+:root {
+    --app-accent-1: #6c757d;
+    /* neutro */
+    --app-accent-2: #3b82f6;
+    /* acciones */
+    --nav-light-bg: #f2f2f7;
+    /* elegido: gris claro elegante */
+    --nav-light-text: #0f1720;
+    /* texto legible en claro */
+    --card-radius: 14px;
+}
+
+/* Asegurar contraste en modo claro */
+[data-bs-theme="light"] body {
+    color: #0f1720;
+    background-color: #ffffff;
+}
+
+[data-bs-theme="light"] .navbar {
+    background-color: var(--nav-light-bg) !important;
+}
+
+[data-bs-theme="light"] .navbar .navbar-brand,
+[data-bs-theme="light"] .navbar .nav-link,
+[data-bs-theme="light"] .navbar .btn {
+    color: var(--nav-light-text) !important;
+}
+
+/* Ajuste del icono toggler para claridad en modo claro */
+[data-bs-theme="light"] .navbar .navbar-toggler {
+    border-color: rgba(15, 23, 32, 0.08);
+}
+
+/* Cards y bordes más suaves */
+.rounded-4 {
+    border-radius: var(--card-radius) !important;
+}
+
+/* Subtle hover / focus */
+.btn,
+.nav-link {
+    transition: transform 0.12s ease, box-shadow 0.12s ease,
+        opacity 0.12s ease;
+}
+
+.btn:hover,
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+/* Navbar sticky shadow on scroll (se añadirá clase .scrolled por JS) */
+.navbar.scrolled {
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+    transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+/* Small helper for visually pleasing table rows */
+#tabla-gastos tr:hover {
+    background-color: rgba(99, 102, 241, 0.04);
+}
+
+/* Smooth collapse animation override */
+.navbar-collapse.collapse {
+    transition: height 0.28s ease;
+}
+
+/* Card entry animation */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Ensure chart canvas doesn't overflow on small screens */
+.chart-container {
+    min-height: 180px;
+}
+
+/* ajustes locales para perfil (se mantienen) */
+.perfil-avatar-lg {
+    width: 140px;
+    height: 140px;
+    border: 4px solid rgba(15, 23, 32, 0.06);
+    object-fit: cover;
+}
+
+/* Small tweak para el contenedor del perfil en pantallas muy pequeñas */
+@media (max-width: 575.98px) {
+    .perfil-avatar-lg {
+        width: 110px;
+        height: 110px;
+    }
+}

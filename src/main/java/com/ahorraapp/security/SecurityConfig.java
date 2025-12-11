@@ -38,7 +38,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints públicos
                         .requestMatchers("/ahorrapp/**").permitAll()
-                        .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/auth/publico/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         // Ruta para usuarios
