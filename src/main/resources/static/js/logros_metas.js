@@ -6,6 +6,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   const themeIcon = document.getElementById("theme-icon");
   const body = document.getElementById("app-body");
   const nav = document.getElementById("main-nav");
+  const btnLogout = document.getElementById("btn-logout");
+  btnLogout.addEventListener("click", async () => {
+    try {
+      await apiLogout();
+    } catch (e) {
+      console.warn("logout error", e);
+    } finally {
+      window.location.href = "/ahorrapp/login";
+    }
+  });
 
   // -----------------------
   // THEME FUNCTIONS (IGUAL QUE perfil.js)
