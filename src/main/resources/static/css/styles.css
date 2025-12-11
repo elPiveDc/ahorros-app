@@ -97,3 +97,36 @@
         height: 110px;
     }
 }
+
+/* Cambia color de fondo de las cards según tema */
+[data-bs-theme="light"] .card {
+    background-color: #ffffff;
+    color: #0f1720;
+}
+
+[data-bs-theme="dark"] .card {
+    background-color: #1e293b;
+    color: #f8fafc;
+}
+
+/* Tablas adaptables al tema */
+table thead {
+    background-color: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+}
+
+table tbody tr:hover {
+    background-color: var(--bs-secondary-bg);
+}
+
+/* Bordes */
+table,
+th,
+td {
+    border-color: var(--bs-border-color) !important;
+}
+
+.item-img {
+    height: 180px;
+    object-fit: cover;
+}
